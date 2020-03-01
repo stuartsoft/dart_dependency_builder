@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dart_dependency_builder/pubspecparser.dart';
 import 'package:test/test.dart';
 
@@ -14,8 +12,8 @@ void main() {
   test ('Only keeps dependencies', () {
     var parser = PubspecParser('pubspec.yaml');
 
-    expect(parser.allDependencies[0], 'pedantic');
-    expect(parser.allDependencies[1], 'test');
+    expect(parser.allDependencies[1], 'pedantic');
+    expect(parser.allDependencies[2], 'test');
   });
 
   test ('Parse regular dependencies separate from dev dependencies', () {
