@@ -1,17 +1,19 @@
 import 'dart:io';
 
+import 'package:dart_dependency_builder/dependency.dart';
+
 class PubspecParser {
   var RootLevelBlock = RegExp(r'^\w*:');
   var FirstLevelDependencyName = RegExp(r'\w*(?=:.*\d+\.\d+\.\d+)');
   var currentYamlSection = '';
 
   String filename;
-  List<String> _dependencies = [];
-  List<String> _devDependencies = [];
+  final List<Dependency> _dependencies = [];
+  final List<Dependency> _devDependencies = [];
 
-  List<String> get allDependencies => _dependencies + _devDependencies;
-  List<String> get dependencies => _dependencies;
-  List<String> get devDependencies => _devDependencies;
+  List<Dependency> get allDependencies => _dependencies + _devDependencies;
+  List<Dependency> get dependencies => _dependencies;
+  List<Dependency> get devDependencies => _devDependencies;
   
   PubspecParser(this.filename){
     var f = File(filename);
@@ -24,10 +26,12 @@ class PubspecParser {
       currentYamlSection = line;
     }
     else if (currentYamlSection == 'dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      _dependencies.add(FirstLevelDependencyName.firstMatch(line).group(0));
+      String name = FirstLevelDependencyName.firstMatch(line).group(0);
+      _dependencies.add(Dependency(name));
     }
     else if (currentYamlSection == 'dev_dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      _devDependencies.add(FirstLevelDependencyName.firstMatch(line).group(0));
+      String name = FirstLevelDependencyName.firstMatch(line).group(0);
+      _devDependencies.add(Dependency(name));
     }
   }
 }

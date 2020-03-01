@@ -12,17 +12,17 @@ void main() {
   test ('Only keeps dependencies', () {
     var parser = PubspecParser('pubspec.yaml');
 
-    expect(parser.allDependencies[1], 'pedantic');
-    expect(parser.allDependencies[2], 'test');
+    expect(parser.allDependencies[1].name, 'pedantic');
+    expect(parser.allDependencies[2].name, 'test');
   });
 
   test ('Parse regular dependencies separate from dev dependencies', () {
     var parser = PubspecParser('pubspec.yaml');
 
-    expect(parser.dependencies[0],          'intl');
-    expect(parser.devDependencies[0],       'pedantic');
-    expect(parser.devDependencies[1],       'test');
-    expect(parser.allDependencies,          ['intl', 'pedantic', 'test']);
+    expect(parser.dependencies[0].name,               'intl');
+    expect(parser.devDependencies[0].name,            'pedantic');
+    expect(parser.devDependencies[1].name,            'test');
+    expect(parser.allDependencies.map((d) => d.name), ['intl', 'pedantic', 'test']);
   });
 
 }
