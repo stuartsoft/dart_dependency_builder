@@ -5,6 +5,7 @@ import 'package:dart_dependency_builder/dependency.dart';
 class PubspecParser {
   static RegExp RootLevelBlock = RegExp(r'^\w*:');
   static RegExp FirstLevelDependencyName = RegExp(r'\w*(?=:.*\d+\.\d+\.\d+)');
+  static RegExp FirstLevelDependencyVersion = RegExp(r'\^*\d+\.\d+\.\d+');
   var currentYamlSection = '';
 
   String filename;
@@ -35,6 +36,7 @@ class PubspecParser {
 
   static Dependency extractDependencyFromLine(String line) {
     String name = FirstLevelDependencyName.firstMatch(line).group(0);
-    return new Dependency(name);
+    String version = FirstLevelDependencyVersion.firstMatch(line).group(0);
+    return Dependency(name, version: version);
   }
 }

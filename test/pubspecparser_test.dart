@@ -25,4 +25,15 @@ void main() {
     expect(parser.allDependencies.map((d) => d.name), ['intl', 'pedantic', 'test']);
   });
 
+  test ('Should parse name, and details', () {
+    var alpha = PubspecParser.extractDependencyFromLine('somePackage: 1.2.3');
+    var bravo = PubspecParser.extractDependencyFromLine('someOtherPackage: ^3.4.5');
+
+    expect(alpha.name, 'somePackage');
+    expect(alpha.version, '1.2.3');
+
+    expect(bravo.name, 'someOtherPackage');
+    expect(bravo.version, '^3.4.5');
+  });
+
 }
