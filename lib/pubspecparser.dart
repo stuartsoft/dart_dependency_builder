@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dart_dependency_builder/dependency.dart';
 
 class PubspecParser {
-  var RootLevelBlock = RegExp(r'^\w*:');
-  var FirstLevelDependencyName = RegExp(r'\w*(?=:.*\d+\.\d+\.\d+)');
+  static RegExp RootLevelBlock = RegExp(r'^\w*:');
+  static RegExp FirstLevelDependencyName = RegExp(r'\w*(?=:.*\d+\.\d+\.\d+)');
   var currentYamlSection = '';
 
   String filename;
@@ -26,14 +26,14 @@ class PubspecParser {
       currentYamlSection = line;
     }
     else if (currentYamlSection == 'dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      _dependencies.add(_extractDependencyFromLine(line));
+      _dependencies.add(extractDependencyFromLine(line));
     }
     else if (currentYamlSection == 'dev_dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      _devDependencies.add(_extractDependencyFromLine(line));
+      _devDependencies.add(extractDependencyFromLine(line));
     }
   }
 
-  Dependency _extractDependencyFromLine(String line) {
+  static Dependency extractDependencyFromLine(String line) {
     String name = FirstLevelDependencyName.firstMatch(line).group(0);
     return new Dependency(name);
   }
