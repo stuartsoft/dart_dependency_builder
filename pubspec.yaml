@@ -1,13 +1,13 @@
 name: dart_dependency_builder
-description: A sample command-line application.
+description: Builds a license file for your dart project
 # version: 1.0.0
 # homepage: https://www.example.com
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
 
-#dependencies:
-#  path: ^1.6.0
+dependencies:
+  intl: ^0.16.1
 
 dev_dependencies:
   pedantic: ^1.8.0
