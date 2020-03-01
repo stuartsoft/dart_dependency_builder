@@ -26,12 +26,15 @@ class PubspecParser {
       currentYamlSection = line;
     }
     else if (currentYamlSection == 'dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      String name = FirstLevelDependencyName.firstMatch(line).group(0);
-      _dependencies.add(Dependency(name));
+      _dependencies.add(_extractDependencyFromLine(line));
     }
     else if (currentYamlSection == 'dev_dependencies:' && FirstLevelDependencyName.hasMatch(line)){
-      String name = FirstLevelDependencyName.firstMatch(line).group(0);
-      _devDependencies.add(Dependency(name));
+      _devDependencies.add(_extractDependencyFromLine(line));
     }
+  }
+
+  Dependency _extractDependencyFromLine(String line) {
+    String name = FirstLevelDependencyName.firstMatch(line).group(0);
+    return new Dependency(name);
   }
 }
